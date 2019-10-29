@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Your app title -->
+    <title>GuiaGchu App</title>
+
+    <!-- This template defaults to the iOS CSS theme. To support both iOS and material design themes, see the Framework7 Tutorial at the link below:
+        https://www.idangero.us/framework7/tutorials/maintain-both-ios-and-material-themes-in-single-app.html
+     -->
+
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">
+</head>
+
+<body>
+
+    <div id="splash" class="splashDiv">
+        <img src="img/logo_trans.png" style="height: 110px; width: auto;">
+    </div>
+        <!-- Status bar overlay for full screen mode (PhoneGap) -->
+        <div class="statusbar-overlay"></div>
+
+        <!-- Panels overlay-->
+        <div class="panel-overlay"></div>
+        <!-- Left panel with reveal effect-->
+        <div class="panel panel-left panel-reveal">
+            <div class="content-block" style="margin-top: 60px; font-size: 16px;">
+                <a href="#" id="btnInicio" class="close-panel link"><i class="fa fa-home" aria-hidden="true"></i><p style="display: inline; margin-left: 10px;">Inicio</p></a></br></br>
+                <a href="https://guiagchu.com/turnosdelasfarmaciasengualeguaychu.html" class="external close-panel link"><i class="fa fa-plus-square" aria-hidden="true"></i><p style="display: inline; margin-left: 10px;">Farmacias de Turno</p></a></br></br>
+                <a href="#" id="btnContacto" class="close-panel link"><i class="fa fa-address-book" aria-hidden="true"></i><p style="display: inline; margin-left: 10px;">Contacto con la Guia</p></a></br></br>
+                <a href="#" id="btnContactoDiblet" class="close-panel link"><i class="fa fa-desktop" aria-hidden="true"></i><p style="display: inline; margin-left: 10px;">Contacto con el desarrollador</p></a>
+            </div>
+        </div>
+
+        <!-- Views -->
+        <div id="home" class="views" style="display: none">
+            <!-- Your main view, should have "view-main" class -->
+            <div class="view view-main">
+                <!-- Top Navbar-->
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+                        <div class="left">
+                            <a href="#" class="icon-only open-panel iconoa"><i class="fa fa-bars icono"></i></a>
+                            <a href="#" class="icon-only iconoa" id="botonAtras"><i class="fa fa-arrow-left icono" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="center"></div>
+                        <div class="right">
+                            <img src="img/logo_guia.png" style="height: 50px; width: auto;">
+                        </div>
+                    </div>
+                </div>
+                <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+                <div class="pages navbar-through toolbar-through">
+                    <input type="hidden" id="cargoInicioSeg" value="">
+                    <input type="hidden" id="cargoInicio" value="">
+                    <!-- Page, "data-page" contains page name -->
+                    <div id="homePage" data-page="index" class="page">
+                        <!-- Scrollable page content -->
+                        <div class="page-content" style="padding-bottom: 0px;">
+                            <div class="content-block buscadorDiv">
+                                <input type="search" class="form-input--main" id="texto_busqueda" placeholder="¿Qué buscás?">
+                                <button class="btn-main buscar" id="btnBuscar">Buscar</button>
+                            </div>
+                            <div id="rubrosHomePage" class="content-block rubrosHome">
+                            </div>
+                        </div>
+                    </div> 
+                    <!-- FIN HOME -->
+
+                    <!-- INICIO LISTA DE COMERCIOS -->
+                    <div id="comerciosPage" data-page="comercios" class="page">
+                        <!-- Scrollable page content -->
+                        <div class="page-content" style="padding-bottom: 0px;">
+                            <div id="comerciosResult" class="content-block" style="margin: 0px;padding-bottom: 20px;padding-top: 20px; background-color: #FAFAFA;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIN LISTA DE COMERCIOS -->
+
+                    <!-- INICIO COMERCIO -->
+                    <div id="comercioPage" data-page="comercio" class="page">
+                        <!-- Scrollable page content -->
+                        <div class="page-content" style="padding-bottom: 0px;">
+                            <div id="comercioResult" class="content-block" style="margin: 0px;padding-bottom: 20px;padding-top: 20px; background-color: #FAFAFA;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIN COMERCIO -->
+
+                    <!-- INICIO CONTACTO -->
+                    <div id="contactoPage" data-page="contacto" class="page">
+                        <!-- Scrollable page content -->
+                        <div class="page-content" style="padding-bottom: 0px;">
+                            <div id="contactoResult" class="content-block" style="margin: 0px;padding-bottom: 10px;padding-top: 5px; background-color: #FAFAFA;">
+                                <div style="text-align: center;"><img src="img/logo_trans.png" style="height: 100px; width: auto;"></div>
+                                <div class="descripcionComercioLista">
+                                    <b>TELEFONO</b>
+                                </div>
+                                <a href="#" class="contacto_telefono external verdeOscuro"></a>
+                                <hr>
+                                <div class="descripcionComercioLista">
+                                    <b>WEB</b>
+                                </div>
+                                <a href="#" class="contacto_web external verdeOscuro"></a>
+                                <hr><div class="descripcionComercioLista">
+                                    <b>E-MAIL</b>
+                                </div>
+                                <a href="#" class="contacto_email external verdeOscuroMin"></a>
+                                <hr><div class="descripcionComercioLista">
+                                    <b>FACEBOOK</b>
+                                </div>
+                                <a href="#" class="contacto_facebook external verdeOscuro">Ir</a>
+                                <hr><div class="descripcionComercioLista">
+                                    <b>APP</b>
+                                </div>
+                                <a href="#" class="contacto_app external verdeOscuro">Google Play Store</a>
+                                <hr>
+                                <div style="margin-top: 50px;">
+                                Desarrollado por <b><a href="https://diblet.com" class="external verdeOscuro">Diblet®</a></b> para <b><a href="https://guiagchu.com" class="external verdeOscuro">guiagchu.com</a></b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIN CONTACTO -->
+
+                    <!-- INICIO CONTACTO DIBLET -->
+                    <div id="contactoDibletPage" data-page="contacto" class="page">
+                        <!-- Scrollable page content -->
+                        <div class="page-content" style="padding-bottom: 0px;">
+                            <div id="contactoResult" class="content-block" style="margin: 0px;padding-bottom: 10px;padding-top: 5px;">
+                                <div style="text-align: center;"><img class="contacto_diblet_logo_small" style="height: 100px; width: auto; border-radius: 20px; margin-bottom: 20px; margin-top: 10px;"></div>
+                                <div class="descripcionComercioLista">
+                                    <b>TELEFONO</b>
+                                </div>
+                                <a href="#" class="contacto_diblet_telefono external verdeOscuro"></a>
+                                <hr>
+                                <div class="descripcionComercioLista">
+                                    <b>WEB</b>
+                                </div>
+                                <a href="#" class="contacto_diblet_web external verdeOscuro"></a>
+                                <hr><div class="descripcionComercioLista">
+                                    <b>E-MAIL</b>
+                                </div>
+                                <a href="#" class="contacto_diblet_email external verdeOscuroMin"></a>
+                                <hr><div class="descripcionComercioLista">
+                                    <b>FACEBOOK</b>
+                                </div>
+                                <a href="#" class="contacto_diblet_facebook external verdeOscuro">Ir
+                                </a>
+                                <hr>
+                                <div class="descripcionComercioLista">
+                                    <b>HORARIO DE ATENCION</b>
+                                </div>
+                                    <p class="contacto_diblet_horario" style="margin-top: 0px; margin-bottom: 0px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIN CONTACTO DIBLET-->
+
+                </div>
+                <!-- Bottom Toolbar-->
+                <!-- <div class="toolbar">
+                    <div class="toolbar-inner">
+                        Desarrollado por <a href="https://diblet.com" class="external">Diblet®</a> para <a href="https://guiagchu.com" class="external">guiagchu.com</a>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/home.js"></script>
+</body>
+
+</html>
